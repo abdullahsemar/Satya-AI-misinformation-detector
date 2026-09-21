@@ -1,0 +1,664 @@
+/* 
+   TRUTHLENS PREMIUM UI: Black + Red Cybersecurity Theme
+   Focus: Smooth transitions, glow effects, and modern animations.
+*/
+
+:root {
+    --bg-dark: #000000;
+    --bg-accent: #0a0a0a;
+    --red-glow: #ff2a4b;
+    --red-dim: #991b1b;
+    --yellow-glow: #eab308;
+    --green-glow: #22c55e;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --blur-intensity: 12px;
+}
+
+/* Media Borders & Glow Updates */
+.df-border-fake {
+    outline: 2px solid var(--red-glow) !important;
+    box-shadow: 0 0 25px rgba(255, 42, 75, 0.6) !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: dfGlowPulseRed 3s infinite;
+}
+
+.df-border-suspicious {
+    outline: 2px solid var(--yellow-glow) !important;
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.4) !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.df-border-real {
+    outline: 2px solid var(--green-glow) !important;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.3) !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dfGlowPulseRed {
+
+    0%,
+    100% {
+        box-shadow: 0 0 15px rgba(255, 42, 75, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(255, 42, 75, 0.8);
+    }
+}
+
+/* Badge System - Premium Overhaul */
+.df-badge-container {
+    position: absolute;
+    z-index: 2147483647;
+    pointer-events: auto;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.df-badge-container.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.df-badge-container.fading {
+    opacity: 0;
+    transform: scale(0.95) translateY(5px);
+    pointer-events: none;
+}
+
+.df-badge-icon {
+    color: white;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(var(--blur-intensity));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.df-badge-icon:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Result Animations - Soft Pop & Glow */
+.df-badge-icon.result-ready {
+    animation: dfBadgePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes dfBadgePop {
+    0% {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Modern Minimal Circular Loader */
+.df-loader {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: dfSpin 0.8s linear infinite;
+}
+
+@keyframes dfSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Page Threat Banner */
+.df-threat-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #000, var(--red-dim), #000);
+    background-size: 200% 200%;
+    color: white;
+    text-align: center;
+    padding: 12px 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2147483647;
+    border-bottom: 1px solid var(--red-glow);
+    box-shadow: 0 4px 20px rgba(255, 42, 75, 0.3);
+    display: none;
+}
+
+.df-threat-banner.show {
+    display: block;
+    animation: dfSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards, dfBannerFlow 4s linear infinite;
+}
+
+@keyframes dfSlideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes dfBannerFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+/* Premium XAI Modal */
+.df-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(20px);
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.df-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.df-modal-content {
+    background: var(--bg-accent);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 32px;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 100px rgba(255, 42, 75, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    transform: translateY(20px) scale(0.98);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.df-modal-overlay.active .df-modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.df-modal-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.df-modal-close:hover {
+    background: var(--red-glow);
+    transform: rotate(90deg);
+}
+
+.df-modal-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+}
+
+.df-modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 24px;
+}
+
+.df-modal-preview {
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.df-modal-preview img,
+.df-modal-preview video {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+}
+
+/* XAI Bounding Box Animation */
+.df-xai-box {
+    position: absolute;
+    border: 2px solid var(--red-glow);
+    background: rgba(255, 42, 75, 0.1);
+    box-shadow: 0 0 15px var(--red-glow);
+    pointer-events: none;
+    animation: dfBoxPulse 2s infinite;
+}
+
+@keyframes dfBoxPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.df-modal-details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.df-modal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.df-modal-label {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.df-score-text {
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.df-modal-explanation {
+    font-size: 14px;
+    color: #e2e8f0;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 2px solid var(--red-glow);
+}
+
+.df-agreement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.df-agreement-item {
+    font-size: 13px;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+/* Video Timeline */
+.df-timeline {
+    height: 6px;
+    background: #111;
+    border-radius: 10px;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.df-timeline-segment {
+    position: absolute;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Cat Assistant Animations in Page (Tooltips) */
+.df-cat-mini {
+    font-size: 20px;
+    filter: drop-shadow(0 0 5px rgba(255, 165, 0, 0.5));
+}
+
+.df-cat-mini.happy {
+    animation: dfCatHappy 1.5s infinite ease-in-out;
+}
+
+.df-cat-mini.angry {
+    animation: dfCatAngry 0.3s infinite;
+}
+
+@keyframes dfCatHappy {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(5deg);
+    }
+}
+
+@keyframes dfCatAngry {
+
+    0%,
+    100% {
+        transform: translateX(0) scale(1.1);
+    }
+
+    50% {
+        transform: translateX(2px) scale(1.1) rotate(-5deg);
+    }
+}
+
+/* Fake News Warning Indicator */
+.df-misinfo-tag {
+    background: rgba(239, 68, 68, 0.1);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    animation: dfFlicker 2s infinite;
+}
+
+@keyframes dfFlicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ==========================================================
+   SATYA FLOATING TEXT VERIFICATION POPOUT WIDGET
+   Non-intrusive, floating glassmorphic cyber design
+   ========================================================== */
+
+.satya-text-popout {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    width: 440px !important;
+    max-width: calc(100vw - 48px) !important;
+    max-height: calc(100vh - 48px) !important;
+    background: rgba(10, 10, 14, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 42, 75, 0.35) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 42, 75, 0.2) !important;
+    z-index: 2147483647 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    color: #f8fafc !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    transform: translateY(40px) scale(0.94);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease, height 0.3s ease !important;
+    box-sizing: border-box !important;
+}
+
+.satya-text-popout.active {
+    transform: translateY(0) scale(1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+.satya-text-popout.minimized {
+    width: 320px !important;
+    border-radius: 12px !important;
+}
+
+.satya-text-popout.minimized .satya-popout-body {
+    display: none !important;
+}
+
+.satya-popout-header {
+    padding: 12px 16px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    user-select: none !important;
+    cursor: default !important;
+    flex-shrink: 0 !important;
+}
+
+.satya-popout-title-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+}
+
+.satya-popout-dot {
+    width: 10px !important;
+    height: 10px !important;
+    background: #ff2a4b !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 10px #ff2a4b !important;
+    flex-shrink: 0 !important;
+    animation: satyaPulseDot 2s infinite !important;
+}
+
+@keyframes satyaPulseDot {
+    0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px #ff2a4b; }
+    50% { transform: scale(1.25); opacity: 0.85; box-shadow: 0 0 16px #ff2a4b; }
+}
+
+.satya-popout-title {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    letter-spacing: 0.3px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.satya-popout-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+}
+
+.satya-popout-btn {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #cbd5e1 !important;
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    padding: 0 !important;
+    outline: none !important;
+    line-height: 1 !important;
+}
+
+.satya-popout-btn:hover {
+    background: rgba(255, 42, 75, 0.25) !important;
+    border-color: #ff2a4b !important;
+    color: #fff !important;
+}
+
+.satya-popout-body {
+    padding: 16px !important;
+    max-height: 480px !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 42, 75, 0.4) transparent !important;
+}
+
+.satya-popout-body::-webkit-scrollbar {
+    width: 5px !important;
+}
+
+.satya-popout-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 42, 75, 0.4) !important;
+    border-radius: 4px !important;
+}
+
+.satya-claim-preview {
+    font-size: 11px !important;
+    color: #94a3b8 !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-left: 2px solid #ff2a4b !important;
+    padding: 8px 10px !important;
+    border-radius: 0 6px 6px 0 !important;
+    margin-bottom: 14px !important;
+    line-height: 1.4 !important;
+    max-height: 54px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+}
+
+.satya-progress-bar-container {
+    width: 100% !important;
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    margin: 14px 0 10px 0 !important;
+}
+
+.satya-progress-bar-fill {
+    height: 100% !important;
+    width: 0% !important;
+    background: linear-gradient(90deg, #ff2a4b, #f59e0b, #22c55e) !important;
+    border-radius: 4px !important;
+    transition: width 0.25s ease !important;
+}
+
+.satya-accordion-btn {
+    width: 100% !important;
+    text-align: left !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f8fafc !important;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    transition: all 0.2s ease !important;
+}
+
+.satya-accordion-btn:hover {
+    background: rgba(255, 255, 255, 0.09) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.satya-accordion-content {
+    display: none;
+    padding: 10px 12px !important;
+    background: #111115 !important;
+    border-radius: 6px !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    margin-top: 4px !important;
+    font-size: 11px !important;
+    color: #cbd5e1 !important;
+    line-height: 1.45 !important;
+    box-sizing: border-box !important;
+}
+
+.satya-copy-btn {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #94a3b8 !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+.satya-copy-btn:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #fff !important;
+}

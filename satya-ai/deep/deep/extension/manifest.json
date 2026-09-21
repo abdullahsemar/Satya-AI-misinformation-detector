@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "SATYA — AI Forward-Checker / Deepfake Detector",
+  "version": "2.0",
+  "description": "Multimodal Misinformation Verification Platform & Live Deepfake Detector.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "notifications",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

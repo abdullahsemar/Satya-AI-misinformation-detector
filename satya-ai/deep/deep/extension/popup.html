@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SATYA — AI Forward-Checker / Deepfake Detector</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;700&display=swap');
+
+        :root {
+            --red: #ff2a4b;
+            --red-glow: rgba(255, 42, 75, 0.4);
+            --yellow: #eab308;
+            --green: #22c55e;
+            --bg: #000;
+            --card: #0a0a0a;
+            --text: #f8fafc;
+        }
+
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            width: 360px; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background: #000;
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-glow {
+            width: 9px; height: 9px;
+            background: var(--red);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--red);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+        h2 { margin: 0; font-size: 16px; font-weight: 800; letter-spacing: -0.5px; }
+        .sub-tag { font-size: 9px; color: #64748b; font-weight: 700; text-transform: uppercase; }
+
+        .content { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+        
+        /* Language Selector Bar */
+        .lang-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        select.lang-select {
+            background: #111;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        /* Cat Assistant Panel */
+        .cat-panel {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cat-icon { font-size: 30px; }
+        .cat-msg { font-size: 12px; font-weight: 600; line-height: 1.4; color: #94a3b8; }
+
+        /* Text Verification Box */
+        .text-verify-card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; font-weight: 800; }
+        textarea.claim-input {
+            width: 100%;
+            height: 60px;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            color: #fff;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 11px;
+            resize: none;
+            box-sizing: border-box;
+        }
+        textarea.claim-input:focus { outline: none; border-color: var(--red); }
+        .verify-btn {
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .verify-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .trust-section { text-align: center; }
+        .trust-val { font-size: 38px; font-weight: 900; background: linear-gradient(135deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .stat-box { 
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .stat-num { font-size: 16px; font-weight: 800; }
+        .stat-tag { font-size: 9px; text-transform: uppercase; color: #64748b; margin-top: 2px; font-weight: 700; }
+        
+        button.rescan-btn { 
+            background: #fff;
+            color: #000;
+            border: none; 
+            padding: 12px; 
+            font-size: 12px; 
+            font-weight: 800; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        button.rescan-btn:hover { background: #eee; }
+        
+        .history-pane { margin-top: 2px; }
+        .history-title { font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; letter-spacing: 1px; }
+        .history-list { max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+        
+        .history-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid var(--green);
+        }
+        .history-item.fake, .history-item.likely_false { border-left-color: var(--red); background: rgba(255, 42, 75, 0.05); }
+        .history-item.suspicious, .history-item.unverifiable { border-left-color: var(--yellow); }
+
+        .switch-container { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: #64748b; }
+        .switch { position: relative; width: 32px; height: 16px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #222; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 10px; width: 10px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--red); }
+        input:checked + .slider:before { transform: translateX(14px); }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="brand">
+            <div class="logo-glow"></div>
+            <div>
+                <h2>SATYA</h2>
+                <div class="sub-tag">AI Forward-Checker</div>
+            </div>
+        </div>
+        <div class="switch-container">
+            <span id="scanStatusText">ACTIVE</span>
+            <label class="switch">
+              <input type="checkbox" id="scanToggle" checked>
+              <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    
+    <div class="content">
+        <!-- Language Selector -->
+        <div class="lang-bar">
+            <span>🌐 Language / மொழி:</span>
+            <select id="langSelect" class="lang-select">
+                <option value="en">English</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+            </select>
+        </div>
+
+        <!-- Orange Cat Assistant -->
+        <div class="cat-panel" id="catPanel">
+            <div class="cat-icon" id="catIcon">😺</div>
+            <div class="cat-msg" id="catMessage">SATYA Engine ready. Monitoring media & text claims...</div>
+        </div>
+
+        <!-- Text Claim Verification Box -->
+        <div class="text-verify-card">
+            <div class="card-label">Verify Text Claim or Forwarded Message</div>
+            <textarea id="claimInput" class="claim-input" placeholder="Paste social media post, forwarded WhatsApp message, or article claim..."></textarea>
+            <button id="verifyTextBtn" class="verify-btn">
+                <span>🔍</span> Verify Claim
+            </button>
+        </div>
+
+        <!-- Page Credibility Card -->
+        <div class="card">
+            <div class="trust-section">
+                <div class="card-label">Page Credibility Score</div>
+                <div class="trust-val" id="trustScore">100%</div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <div class="stat-num" id="tabScanned">0</div>
+                    <div class="stat-tag">Analyzed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num" id="tabFake" style="color: #64748b;">0</div>
+                    <div class="stat-tag">Flagged</div>
+                </div>
+            </div>
+        </div>
+
+        <button id="scanBtn" class="rescan-btn">
+            <span>🔄</span> Rescan Page Media
+        </button>
+        
+        <div class="history-pane">
+            <div class="history-title">Live Verification Feed</div>
+            <div class="history-list" id="historyList"></div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
